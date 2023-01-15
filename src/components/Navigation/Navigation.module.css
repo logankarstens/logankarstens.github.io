@@ -1,0 +1,72 @@
+@font-face {
+    font-family: run;
+    src: url('../../assets/Run/run.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+.nav {
+    height: 100vh;
+    background-color: #110915;
+    transition: width 0.3s ease-in-out;
+    z-index: 10;
+    top: 0;
+}
+
+.nav h1 {
+    font-size: 1.8rem;
+    font-family: run;
+    margin-top: 3rem;
+    color: #C2AD95;
+    margin-left: 4.4rem;
+}
+
+.wrapper {
+    position: absolute;
+    top: calc(40% + 70px);
+    left: 5rem;
+    transform: translateY(-50%) translateX(-50%);
+}
+
+.links-container {
+    background-color: #C2AD95;
+    width: 3px;
+    font-size: 1.15rem;
+}
+
+.links-container div {
+    padding-left: 2rem;
+}
+
+.links-container div + div {
+    padding-top: 3vh;
+}
+
+.currentSection {
+    position: absolute;
+    width: 1rem;
+    left: 1.5px;
+    height: 1rem;
+    outline: 3px solid #C2AD95;
+    background-color: #110915;
+    transform: translateX(-50%) rotate(0.125turn);
+}
+
+.contracted {
+    width: 10.2rem;
+}
+
+.contracted .links-container div {
+   opacity: 0;
+   transition: opacity 0.15s linear;
+}
+
+.expanded {
+    width: 20.4rem;
+}
+.expanded .links-container div {
+    opacity: 1;
+    transition: opacity 0.15s linear 0.15s;
+}
+
+
