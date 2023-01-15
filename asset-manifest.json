@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/logankarstens.github.io/static/css/main.4e935487.css",
-    "main.js": "/logankarstens.github.io/static/js/main.e91e41a1.js",
-    "static/media/run.woff": "/logankarstens.github.io/static/media/run.0e30a87f18fefd5afaa6.woff",
-    "index.html": "/logankarstens.github.io/index.html",
-    "main.4e935487.css.map": "/logankarstens.github.io/static/css/main.4e935487.css.map",
-    "main.e91e41a1.js.map": "/logankarstens.github.io/static/js/main.e91e41a1.js.map"
+    "main.css": "/static/css/main.2680e01b.css",
+    "main.js": "/static/js/main.e91e41a1.js",
+    "static/media/run.woff": "/static/media/run.0e30a87f18fefd5afaa6.woff",
+    "index.html": "/index.html",
+    "main.2680e01b.css.map": "/static/css/main.2680e01b.css.map",
+    "main.e91e41a1.js.map": "/static/js/main.e91e41a1.js.map"
   },
   "entrypoints": [
-    "static/css/main.4e935487.css",
+    "static/css/main.2680e01b.css",
     "static/js/main.e91e41a1.js"
   ]
 }
