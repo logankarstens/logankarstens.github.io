@@ -5,7 +5,6 @@ import { PageContextProvider } from './Store/page-context';
 import { Helmet } from 'react-helmet';
 import styles from './App.module.css'
 function App() {
-    const links = ["home", "projects", "resume", "contact"];
   return (
     <PageContextProvider>
         <Helmet>
@@ -14,8 +13,8 @@ function App() {
             <meta name="theme-color" content="#170E1B" />
         </Helmet>
         <div className={styles.flex}>
-            <Navigation links={links} />
-            <ContentManager links={links}></ContentManager>
+            <Navigation  />
+            <ContentManager ></ContentManager>
         </div>
     </PageContextProvider>
   );

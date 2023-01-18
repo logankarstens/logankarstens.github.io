@@ -1,5 +1,36 @@
-.test {
-    flex-grow: 34505340;
+.container {
+    flex-grow: 100;
     position: relative;
     overflow-x: hidden;
+    display: flex;
+    flex-direction: column-reverse;
+    padding-bottom: 2rem;
+    height: 100vh;
+}
+
+.verticalLayout {
+    flex-direction: column-reverse !important;
+}
+
+.filler {
+    flex-grow: 100;
+}
+
+.effect {
+    position: absolute;
+    top: -50%;
+    width: 100%;
+    background-color: #110914;
+    height: 50%;
+}
+
+.effect-moving {
+    top: 100%;
+    transition: top 1s linear;
+}
+
+@media (min-width: 1280px) {
+    .container {
+        flex-direction: row; 
+    }
 }

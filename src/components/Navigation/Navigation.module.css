@@ -7,8 +7,9 @@
 
 .nav {
     height: 100vh;
+    min-width: 100vh;
     background-color: #110915;
-    transition: width 0.3s ease-in-out;
+    transition: min-width 0.3s ease-in-out;
     z-index: 10;
     top: 0;
 }
@@ -53,7 +54,7 @@
 }
 
 .contracted {
-    width: 10.2rem;
+    min-width: 10.2rem;
 }
 
 .contracted .links-container div {
@@ -62,11 +63,10 @@
 }
 
 .expanded {
-    width: 20.4rem;
+    min-width: 20.4rem;
 }
 .expanded .links-container div {
     opacity: 1;
     transition: opacity 0.15s linear 0.15s;
 }
-
 

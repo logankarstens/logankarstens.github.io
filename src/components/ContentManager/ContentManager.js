@@ -1,40 +1,62 @@
-import { useEffect, useContext, useCallback, } from 'react';
+import { useEffect, useContext, useCallback } from 'react';
 import styles from './ContentManager.module.css'
 import BottomText from '../Content/BottomText';
+import Resume from '../Content/Resume';
+import Contact from '../Content/Contact';
 import PageContext from '../../Store/page-context';
-const ContentManager = (props) => {
+
+const ContentManager = () => {
+    // const [swipeData, setSwipeData] = useState();
     const ctx = useContext(PageContext);
     const scrollHandler = useCallback((e) => {
-            if (ctx.page === ctx.delayedPage) {
-                let index = props.links.findIndex(maybePage => maybePage === ctx.page)
-                if((e.deltaY > 0 && index < props.links.length - 1) || (e.deltaY < 0 && index > 0)) {
-                    index += e.deltaY > 0 ? 1 : -1;
-                    ctx.changePage(props.links[index]);
-                }
+        const resume = document.getElementById("resume")
+        if (!(resume && resume.contains(e.target)) && ctx.currentPage === ctx.delayedPage) {
+            let index = ctx.pages.findIndex(maybePage => maybePage === ctx.currentPage)
+            if((e.deltaY > 0 && index < ctx.pages.length - 1) || (e.deltaY < 0 && index > 0)) {
+                index += e.deltaY > 0 ? 1 : -1;
+                ctx.changePage(ctx.pages[index]);
             }
-    }, [ctx, props.links]);
+        }
+    }, [ctx]);
+
+    // const swipeHandler = (e) => (swipeFinished) => {
+    //     if (swipeData !== null) {
+    //         setSwipeData(e.changedTouches[0].screenY)
+    //     } else {
+    //         if (e.changedTouches[0].screenY > swipeData) {
+    //             console.log("swipe down");
+    //         } else {
+    //             console.log("swipe up");
+    //         }
+    //         setSwipeData(null)
+    //     }
+    // }
 
     useEffect(() => {
-        window.addEventListener('wheel', scrollHandler);
+        const scrollArea = document.getElementById("contentmanager");
+        scrollArea.addEventListener('wheel', scrollHandler);
+        // document.addEventListener('touchstart', swipeHandler)
+        // document.addEventListener('touchend', swipeHandler)
         return () => {
-            window.removeEventListener('wheel', scrollHandler)
+            scrollArea.removeEventListener('wheel', scrollHandler)
         }
+        
     }, [ctx, scrollHandler])
 
-//    const pages = {
-//         home: <Home />, 
-//         projects: <Projects />, 
-//         resume: <Resume />, 
-//         contact: <Contact />
-//     }
+    const isVerticalLayout = (ctx.delayedPage === "projects" || ctx.delayedPage === "contact")
 
-//     let currentPage = pages[ctx.delayedPage]
-
-
+    
     return (
-        <div className={styles.test} onScroll={scrollHandler}>
-            <BottomText />
-        </div>
+        <>
+            <div id="contentmanager" className={`${styles.container} ${isVerticalLayout && styles.verticalLayout}`} onScroll={scrollHandler}>
+                <div className={styles.filler}>
+                <BottomText />
+                </div>
+                {(ctx.delayedPage === "resume") && <Resume />}
+                {(ctx.delayedPage === "contact") && <Contact />}
+                {/* {(ctx.delayedPage === "contact") && <Contact />} */}
+            </div>
+        </>
     )
 }
 

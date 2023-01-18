@@ -1,7 +1,17 @@
 const PageTexts = (props) => {
+
+    const styleTitle = (title) => {
+        return (
+            <div>
+                <h2><strong>&#60;&#62;</strong></h2>
+                <h1>{title}</h1>
+                <h2>&#60;/&#62;</h2>
+            </div>
+        );
+    }
     const texts = {
         home: {
-            title: <h1>welcome.</h1>,
+            title: styleTitle("welcome."),
             paragraph: (
                 <div>
                     <p>I'm glad you made it here.</p>
@@ -11,12 +21,13 @@ const PageTexts = (props) => {
                     programming technologies available.</p>
 
                     <p>See more about what I've done below.</p>
+                    <br></br>
                 </div>
             )
 
         },
         projects: {
-            title: <h1>projects.</h1>,
+            title: styleTitle("projects."),
             paragraph: (
                 <div>
                     <p>Take a look at some of my past projects.</p>
@@ -26,25 +37,26 @@ const PageTexts = (props) => {
              
                     <p>All of these projects and more are 
                     available on my GitHub profile.</p>
+                    <br></br>
                 </div>
             )
             
         },
         resume: {
-            title: <h1>resume.</h1>,
+            title: styleTitle("resume."),
             paragraph: <></>
         },
         contact: {
-            title: <h1>contact.</h1>,
+            title: styleTitle("contact."),
             paragraph: <></>
         }
     }
 
-    return texts[props.page][props.type];
-    
-
-        
-
+    return (
+        <>
+            {texts[props.page][props.type]}
+        </>
+    );
 }
 
 export default PageTexts;

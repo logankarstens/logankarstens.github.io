@@ -1,35 +1,40 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 
 const PageContext = React.createContext({
-    page: "",
+    pages: [],
+    currentPage: "",
     delayedPage: "",
     changePage: (page) => {},
 });
 
 export const PageContextProvider = (props) => {
-    const [pages, setPages] = useState({page: "home", delayedPage: "home"});
+    const pages = useMemo(() => ["home", "projects", "resume", "contact"], [])
+    const [pageData, setPageData] = useState({pages: pages, currentPage: "home", delayedPage: "home"});
 
     const changePageHandler = (newPage) => {
-        console.log("changing page to " + newPage)
-        localStorage.setItem("page", newPage)
-        setPages((prevPage) => {
+        //console.log("changing page to " + newPage)
+        localStorage.setItem("currentPage", newPage)
+        setPageData((prevPageData) => {
             return {
-                ...prevPage,
-                page: newPage
+                ...prevPageData,
+                currentPage: newPage
             }
         })
     }
 
     useEffect(() => {
-        changePageHandler(localStorage.getItem("page"))
-        updatePageHandler();
-    }, [])
+        if (pages.find(page => page === localStorage.getItem("currentPage")) !== undefined) {
+            //console.log("found page");
+            changePageHandler(localStorage.getItem("currentPage"))
+            updatePageHandler();
+        }
+    }, [pages])
 
     const updatePageHandler = () => {
-        setPages((prevPage) => {
+        setPageData((prevPageData) => {
             return {
-                ...prevPage,
-                delayedPage: prevPage.page
+                ...prevPageData,
+                delayedPage: prevPageData.currentPage
             }
         })
     }
@@ -38,13 +43,13 @@ export const PageContextProvider = (props) => {
         setTimeout(() => {
             updatePageHandler();
         }, 600)
-    }, [pages.page]);
-    
+    }, [pageData.currentPage]);
     return (
         <PageContext.Provider
             value={{
-                page: pages.page,
-                delayedPage: pages.delayedPage,
+                pages: pageData.pages,
+                currentPage: pageData.currentPage,
+                delayedPage: pageData.delayedPage,
                 changePage: changePageHandler,
             }}
         >

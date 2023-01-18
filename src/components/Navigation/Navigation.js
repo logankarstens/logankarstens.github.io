@@ -4,7 +4,7 @@ import styles from "./Navigation.module.css";
 import ButtonLink from "../UI/ButtonLink/ButtonLink";
 import PageContext from '../../Store/page-context'
 
-const Navigation = (props) => {
+const Navigation = () => {
     const ctx = useContext(PageContext);
     const [expanded, setExpanded] = useState(false);
     const [title, setTitle] = useState("lk.");
@@ -29,21 +29,20 @@ const Navigation = (props) => {
     }, [expanded]);
 
     const currentSectionHandler = index => e => {
-        if (ctx.page === ctx.delayedPage) {
-            ctx.changePage(props.links[index])
+        if (ctx.currentPage === ctx.delayedPage) {
+            ctx.changePage(ctx.pages[index])
         }
     }
     const navDiamondHandler = useCallback((page) => {
-        //transition: top 0.3s ease-in-out;
-        let pageIndex = props.links.findIndex(page => page === ctx.page)
-        let delayedPageIndex = props.links.findIndex(page => page === ctx.delayedPage) 
-        setTransitionLength("top " + (0.2 + 0.1*Math.abs(pageIndex-delayedPageIndex)) + "s ease-in-out");
-        setPosition((1 + 90/(props.links.length-1)*pageIndex)+"%");
-    }, [ctx, props.links]);
+        let pageIndex = ctx.pages.findIndex(page => page === ctx.currentPage)
+        let delayedPageIndex = ctx.pages.findIndex(page => page === ctx.delayedPage) 
+        setTransitionLength("top " + (0.2 + 0.08*Math.abs(pageIndex-delayedPageIndex)) + "s ease-in-out");
+        setPosition((1 + 90/(ctx.pages.length-1)*pageIndex)+"%");
+    }, [ctx]);
 
     useEffect(() => {
-        navDiamondHandler(ctx.page)
-    }, [ctx, navDiamondHandler])
+        navDiamondHandler(ctx.currentPage)
+    }, [ctx.currentPage, navDiamondHandler])
 
     return (
         <div
@@ -55,7 +54,7 @@ const Navigation = (props) => {
             <div className={styles.wrapper}>
                 <div className={styles.currentSection} style={{ top: position, transition: transitionLength }}></div>
                 <div className={styles["links-container"]}>
-                    {props.links.map((link, index) => {
+                    {ctx.pages.map((link, index) => {
                         return (
                             <div key={index}>
                                 <ButtonLink onClick={currentSectionHandler(index)}>
