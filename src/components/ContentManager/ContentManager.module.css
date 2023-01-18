@@ -1,7 +1,7 @@
 .container {
     flex-grow: 100;
     position: relative;
-    overflow-x: hidden;
+    overflow: hidden;
     display: flex;
     flex-direction: column-reverse;
     padding-bottom: 2rem;
@@ -17,20 +17,35 @@
 }
 
 .effect {
+    top: -1080px;
     position: absolute;
-    top: -50%;
-    width: 100%;
-    background-color: #110914;
-    height: 50%;
+    object-fit: fill;
+    background-repeat: no-repeat;
+    min-width: 5080px;
+    background-image: url(../../assets/transition.svg);
+    z-index: 100;
+    min-height: 1080px;
 }
 
-.effect-moving {
-    top: 100%;
-    transition: top 1s linear;
+.effect-top {
+    animation: 0.45s ease-in 0.15s moveUp;
+}
+.effect-bottom {
+    animation: 0.45s ease-in 0.15s moveDown;
 }
 
 @media (min-width: 1280px) {
     .container {
         flex-direction: row; 
     }
+}
+
+@keyframes moveUp {
+    from {top: 1080px; transform: rotateX(0turn)}
+    to {top: -1080px; transform: rotateX(0turn)}
+}
+
+@keyframes moveDown {
+    from {top: -1080px; transform: rotateX(0.5turn)}
+    to {top: 1080px; transform: rotateX(0.5turn)}
 }
