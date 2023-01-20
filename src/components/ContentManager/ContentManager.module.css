@@ -1,22 +1,28 @@
 .container {
-    flex-grow: 100;
     position: relative;
-    overflow: hidden;
     display: flex;
     flex-direction: column-reverse;
-    padding-bottom: 2rem;
-    height: 100vh;
-}
-
-.verticalLayout {
-    flex-direction: column-reverse !important;
+    -webkit-box-sizing: border-box; 
+    -moz-box-sizing: border-box;    
+    box-sizing: border-box; 
+    max-height: 100vh;
 }
 
 .filler {
     flex-grow: 100;
+    min-height: 100%;
+}
+.vertical {
+    flex-direction: column-reverse !important;
+    flex-grow: 100;
 }
 
-.effect {
+.horizontal {
+    flex-grow: 1;
+    height: 100vh;
+}
+
+/* .effect {
     top: -1080px;
     position: absolute;
     object-fit: fill;
@@ -28,11 +34,11 @@
 }
 
 .effect-top {
-    animation: 0.45s ease-in 0.15s moveUp;
+    animation: 0.35s ease-in 0.1s moveUp;
 }
 .effect-bottom {
-    animation: 0.45s ease-in 0.15s moveDown;
-}
+    animation: 0.35s ease-in 0.1s moveDown;
+} */
 
 @media (min-width: 1280px) {
     .container {

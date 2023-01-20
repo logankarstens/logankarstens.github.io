@@ -4,35 +4,38 @@ import BottomText from '../Content/BottomText';
 import Resume from '../Content/Resume';
 import Contact from '../Content/Contact';
 import PageContext from '../../Store/page-context';
-
+//import { delay } from '../../Store/page-context';
 const ContentManager = () => {
-    const [moveStyle, setMoveStyle] = useState(0);
-    const [xPosition, setXPosition] = useState("0vh");
-    // const [swipeData, setSwipeData] = useState();
     const ctx = useContext(PageContext);
+    const [mouseInScrollableArea, setMouseInScrollableArea] = useState(false);
+
+    //const [moveStyle, setMoveStyle] = useState(0);
+    //const [xPosition, setXPosition] = useState("0vh");
+
+    // const [swipeData, setSwipeData] = useState();
+
     const scrollHandler = useCallback((e) => {
-        const resume = document.getElementById("resume")
-        if (!(resume && resume.contains(e.target)) && ctx.currentPage === ctx.delayedPage) {
+        if (!mouseInScrollableArea && ctx.currentPage === ctx.delayedPage) {
             let index = ctx.pages.findIndex(maybePage => maybePage === ctx.currentPage)
             if((e.deltaY > 0 && index < ctx.pages.length - 1) || (e.deltaY < 0 && index > 0)) {
                 const change = e.deltaY > 0 ? 1 : -1;
 
-                if (change === 1) {
-                    setMoveStyle(styles['effect-bottom']);
-                    setXPosition((Math.random()*200 - 200) + "vw")
-                    setTimeout(setMoveStyle.bind(null, ''), 600);
+                // if (change === 1) {
+                //     setMoveStyle(styles['effect-bottom']);
+                //     setXPosition((Math.random()*200 - 200) + "vw")
+                //     setTimeout(setMoveStyle.bind(null, ''), delay);
 
-                } else {
-                    setMoveStyle(styles['effect-top']);
-                    setXPosition((Math.random()*200 - 200) + "vw")
-                    setTimeout(setMoveStyle.bind(null, ''), 600);
-                }
+                // } else {
+                //     setMoveStyle(styles['effect-top']);
+                //     setXPosition((Math.random()*200 - 200) + "vw")
+                //     setTimeout(setMoveStyle.bind(null, ''), delay);
+                // }
 
                 index += change;
                 ctx.changePage(ctx.pages[index]);
             }
         }
-    }, [ctx]);
+    }, [ctx, mouseInScrollableArea]);
 
     // const swipeHandler = (e) => (swipeFinished) => {
     //     if (swipeData !== null) {
@@ -48,29 +51,28 @@ const ContentManager = () => {
     // }
 
     useEffect(() => {
-        const scrollArea = document.getElementById("contentmanager");
-        scrollArea.addEventListener('wheel', scrollHandler);
+        window.addEventListener('wheel', scrollHandler);
         // document.addEventListener('touchstart', swipeHandler)
         // document.addEventListener('touchend', swipeHandler)
         return () => {
-            scrollArea.removeEventListener('wheel', scrollHandler)
+            window.removeEventListener('wheel', scrollHandler)
         }
         
     }, [ctx, scrollHandler])
 
 
-    const isVerticalLayout = (ctx.delayedPage === "projects" || ctx.delayedPage === "contact")
+    const isVertical = (ctx.isPortrait || (ctx.delayedPage === "projects" || ctx.delayedPage === "contact"))
 
     return (
         <>
-            <div id="contentmanager" className={`${styles.container} ${isVerticalLayout && styles.verticalLayout}`} onScroll={scrollHandler}>
-                <div className={`${styles.effect} ${moveStyle}`} style={{left: xPosition}}></div>
+            <div className={`${styles.container} ${isVertical ? styles.vertical : styles.horizontal}`} onScroll={scrollHandler}>
+                {/* <div className={`${styles.effect} ${moveStyle}`} style={{left: xPosition}}></div> */}
                 
-                <div className={styles.filler}>
                 <BottomText />
-                </div>
-                {(ctx.delayedPage === "resume") && <Resume />}
+                
+                {(ctx.delayedPage === "resume") && <Resume setMouseInScrollableArea={setMouseInScrollableArea} />}
                 {(ctx.delayedPage === "contact") && <Contact />}
+                
                 {/* {(ctx.delayedPage === "contact") && <Contact />} */}
             </div>
         </>

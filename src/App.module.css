@@ -1,8 +1,13 @@
-.App {
-  text-align: center;
-    
+.app {
+    height: 100vh;
+    display: flex;
+    overflow: hidden;
 }
 
-.flex {
-    display: flex;
+.flex-vertical {
+    flex-direction: column;
+}
+
+.flex-horizontal {
+    flex-direction: row;
 }
