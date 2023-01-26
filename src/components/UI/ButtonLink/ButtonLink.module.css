@@ -3,10 +3,24 @@
     border: none;
     font-size: 1.15rem;
     color: #C2AD95;
-    transition: color 0..1s linear;
+    transition: color 0.1s linear;
+    display:flex;
+    justify-content: center;
 }
 
-.button:hover {
+.highlight, .hover:hover {
     color: white;
     transition: color 0.1s linear;
+}
+
+.fullButton {
+    padding: 0.5rem 1rem;
+    margin: 0 0.25rem;
+    height: fit-content;
+}
+
+.fullButton:hover {
+    border-color: white;
+    background-color: #1E1323;
+    transition: background-color 0.1s linear;
 }

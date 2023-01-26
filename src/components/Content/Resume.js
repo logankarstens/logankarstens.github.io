@@ -8,8 +8,7 @@ const Resume = (props, ref) => {
 
     const [scrollAmount, setScrollAmount] = useState("0%");
     const [scrollRange, setScrollRange] = useState();
-    const [opacity, setOpacity] = useState(0);
-    const [mouseInResume, setMouseInResume] = useState();
+
     const resume = useRef();
     const scrollHandler = useCallback((e) => {
         let scrollElement;
@@ -20,41 +19,50 @@ const Resume = (props, ref) => {
         );
     }, []);
     
-    const mouseEnterHandler= () => {
-        console.log("enter")
-        setMouseInResume(true);
+    const updateMouseScroll = props.setMouseInScrollableArea;
+
+    // updates mouseInScrollableArea so ContentManager knows whether to switch pages on scroll
+    const mouseEnterHandler = () => {
+        updateMouseScroll(true)
     };
     const mouseLeaveHandler = () => {
-        console.log("exit")
-        setMouseInResume(false);
+        updateMouseScroll(false)
     };
-    useEffect(()=> {
-        console.log("changign")
-        props.setMouseInScrollableArea(mouseInResume)
-    }, [mouseInResume, props])
     
+    // mouseInScrollableArea compatability for swipes on mobile devices
+    
+    const swipeStartHandler = useCallback((e) => {
+        updateMouseScroll(resume && resume.current.contains(e.target))
+    }, [updateMouseScroll])
+    
+    // creates event listener for mobile-compatible mouseScroll handler,
+    // ensures mouseSetInScrollableArea is set to false before unrendering
+    useEffect(() => {
 
-    const toggleOpacity = useCallback(() => {
-        setOpacity((prevOpacity) => (prevOpacity ? 0 : 1));
-    }, []);
+        window.addEventListener("touchstart", swipeStartHandler);
+        
+        return () => {
+            window.removeEventListener("touchstart", swipeStartHandler);
+            updateMouseScroll(false);
+        }
+    }, [swipeStartHandler, updateMouseScroll]);
 
     useEffect(() => {
-        setTimeout(toggleOpacity, 5);
-    }, [toggleOpacity]);
+        if (ctx.currentPage !== ctx.delayedPage) {
 
+            updateMouseScroll(false)
+        }
+    }, [ctx, updateMouseScroll]);
+
+    // custom scrollbar container updates on change between portrait and landscape
     useEffect(() => {
         scrollHandler(resume);
     }, [ctx.isPortrait, scrollHandler]);
 
-    useEffect(() => {
-        if (ctx.currentPage !== ctx.delayedPage) {
-            toggleOpacity();
-        }
-    }, [ctx, toggleOpacity]);
     return (
         <div
             className={styles.container}
-            style={{ opacity: opacity }}
+            style={{ opacity: ctx.opacity, transition: "opacity 0.4s ease-out" }}
             onScroll={scrollHandler}
             onMouseEnter={mouseEnterHandler}
             onMouseLeave={mouseLeaveHandler}

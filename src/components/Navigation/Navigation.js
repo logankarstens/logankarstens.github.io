@@ -14,6 +14,7 @@ const Navigation = () => {
         setExpanded((prevState) => !prevState);
     };
 
+    // change header when navbar is extended
     useEffect(() => {
         let timer;
         if (!expanded) {
@@ -28,11 +29,16 @@ const Navigation = () => {
         };
     }, [expanded]);
 
+    // changes page when links are clicked
+
     const currentSectionHandler = index => e => {
         if (ctx.currentPage === ctx.delayedPage) {
             ctx.changePage(ctx.pages[index])
         }
     }
+
+    // moves diamond on page change
+    
     const navDiamondHandler = useCallback((page) => {
         let pageIndex = ctx.pages.findIndex(page => page === ctx.currentPage)
         let delayedPageIndex = ctx.pages.findIndex(page => page === ctx.delayedPage) 
@@ -57,7 +63,7 @@ const Navigation = () => {
                     {ctx.pages.map((link, index) => {
                         return (
                             <div key={index}>
-                                <ButtonLink onClick={currentSectionHandler(index)}>
+                                <ButtonLink onClick={currentSectionHandler(index)} hover={true}>
                                     {link}
                                 </ButtonLink>
                             </div>

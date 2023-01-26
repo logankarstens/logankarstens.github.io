@@ -5,7 +5,8 @@
     -webkit-box-sizing: border-box; 
     -moz-box-sizing: border-box;    
     box-sizing: border-box; 
-    max-height: 100vh;
+    overflow: hidden;
+    font-size: 0.7rem;
 }
 
 .filler {
@@ -14,7 +15,7 @@
 }
 .vertical {
     flex-direction: column-reverse !important;
-    flex-grow: 100;
+    flex-grow: 1;
 }
 
 .horizontal {
@@ -22,27 +23,10 @@
     height: 100vh;
 }
 
-/* .effect {
-    top: -1080px;
-    position: absolute;
-    object-fit: fill;
-    background-repeat: no-repeat;
-    min-width: 5080px;
-    background-image: url(../../assets/transition.svg);
-    z-index: 100;
-    min-height: 1080px;
-}
-
-.effect-top {
-    animation: 0.35s ease-in 0.1s moveUp;
-}
-.effect-bottom {
-    animation: 0.35s ease-in 0.1s moveDown;
-} */
-
-@media (min-width: 1280px) {
+@media (min-width: 1100px) {
     .container {
         flex-direction: row; 
+        font-size: 1rem;
     }
 }
 

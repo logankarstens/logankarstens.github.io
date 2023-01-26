@@ -8,7 +8,6 @@ import { Helmet } from 'react-helmet';
 import styles from './App.module.css'
 function App() {
     const ctx = useContext(PageContext);
-    console.log(ctx.isPortrait)
   return (
     
     <div className={`${styles.app} ${ctx.isPortrait ? styles['flex-vertical'] : styles['flex-horizontal']}`}>

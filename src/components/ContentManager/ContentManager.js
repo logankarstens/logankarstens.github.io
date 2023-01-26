@@ -1,82 +1,75 @@
-import { useState, useEffect, useContext, useCallback } from 'react';
-import styles from './ContentManager.module.css'
-import BottomText from '../Content/BottomText';
-import Resume from '../Content/Resume';
-import Contact from '../Content/Contact';
-import PageContext from '../../Store/page-context';
-//import { delay } from '../../Store/page-context';
+import { useState, useEffect, useContext, useCallback, useRef } from "react";
+import styles from "./ContentManager.module.css";
+import BottomText from "../Content/BottomText";
+import Resume from "../Content/Resume";
+import Contact from "../Content/Contact";
+import PageContext from "../../Store/page-context";
 const ContentManager = () => {
     const ctx = useContext(PageContext);
     const [mouseInScrollableArea, setMouseInScrollableArea] = useState(false);
+    const [swipeStartPosition, setSwipeStartPosition] = useState();
 
-    //const [moveStyle, setMoveStyle] = useState(0);
-    //const [xPosition, setXPosition] = useState("0vh");
+    // changes current page on scroll
+    const scrollHandler = useCallback(
+        (e) => {
+            let delta = e.deltaY === undefined ? e : e.deltaY;
+            if (!mouseInScrollableArea && ctx.currentPage === ctx.delayedPage) {
+                let index = ctx.pages.findIndex((maybePage) => maybePage === ctx.currentPage);
+                if ((delta > 0 && index < ctx.pages.length - 1) || (delta < 0 && index > 0)) {
+                    const change = delta > 0 ? 1 : -1;
 
-    // const [swipeData, setSwipeData] = useState();
-
-    const scrollHandler = useCallback((e) => {
-        if (!mouseInScrollableArea && ctx.currentPage === ctx.delayedPage) {
-            let index = ctx.pages.findIndex(maybePage => maybePage === ctx.currentPage)
-            if((e.deltaY > 0 && index < ctx.pages.length - 1) || (e.deltaY < 0 && index > 0)) {
-                const change = e.deltaY > 0 ? 1 : -1;
-
-                // if (change === 1) {
-                //     setMoveStyle(styles['effect-bottom']);
-                //     setXPosition((Math.random()*200 - 200) + "vw")
-                //     setTimeout(setMoveStyle.bind(null, ''), delay);
-
-                // } else {
-                //     setMoveStyle(styles['effect-top']);
-                //     setXPosition((Math.random()*200 - 200) + "vw")
-                //     setTimeout(setMoveStyle.bind(null, ''), delay);
-                // }
-
-                index += change;
-                ctx.changePage(ctx.pages[index]);
+                    index += change;
+                    ctx.changePage(ctx.pages[index]);
+                }
             }
-        }
-    }, [ctx, mouseInScrollableArea]);
+        },
+        [ctx, mouseInScrollableArea]
+    );
 
-    // const swipeHandler = (e) => (swipeFinished) => {
-    //     if (swipeData !== null) {
-    //         setSwipeData(e.changedTouches[0].screenY)
-    //     } else {
-    //         if (e.changedTouches[0].screenY > swipeData) {
-    //             console.log("swipe down");
-    //         } else {
-    //             console.log("swipe up");
-    //         }
-    //         setSwipeData(null)
-    //     }
-    // }
+     // changes current page on swipe
+    const swipeHandler = useCallback(
+        (e) => {
+            const touchPosition = e.changedTouches[0].screenY;
+            if (e.type === "touchstart") {
+                setSwipeStartPosition(touchPosition);
+            } else if (e.type === "touchend") {
+                scrollHandler(swipeStartPosition - touchPosition);
+            }
+        },
+        [swipeStartPosition, setSwipeStartPosition, scrollHandler]
+    );
 
+    const wrapper = useRef();
+
+    // adds scroll/swipe listeners for custom scrolling
     useEffect(() => {
-        window.addEventListener('wheel', scrollHandler);
-        // document.addEventListener('touchstart', swipeHandler)
-        // document.addEventListener('touchend', swipeHandler)
+        const cm = wrapper.current;
+        window.addEventListener("wheel", scrollHandler);
+        cm.addEventListener("touchstart", swipeHandler);
+        cm.addEventListener("touchend", swipeHandler);
         return () => {
-            window.removeEventListener('wheel', scrollHandler)
-        }
-        
-    }, [ctx, scrollHandler])
+            window.removeEventListener("wheel", scrollHandler);
+            cm.removeEventListener("touchstart", swipeHandler);
+            cm.removeEventListener("touchend", swipeHandler);
+        };
+    }, [ctx, scrollHandler, swipeHandler]);
 
-
-    const isVertical = (ctx.isPortrait || (ctx.delayedPage === "projects" || ctx.delayedPage === "contact"))
+    // determines whether page layout should be vertical or horizontal based on viewport width
+    const isVertical = ctx.isPortrait || ctx.delayedPage === "projects" || ctx.delayedPage === "contact";
 
     return (
         <>
-            <div className={`${styles.container} ${isVertical ? styles.vertical : styles.horizontal}`} onScroll={scrollHandler}>
-                {/* <div className={`${styles.effect} ${moveStyle}`} style={{left: xPosition}}></div> */}
-                
+            <div
+                className={`${styles.container} ${isVertical ? styles.vertical : styles.horizontal}`}
+                onScroll={scrollHandler}
+                ref={wrapper}
+            >
                 <BottomText />
-                
-                {(ctx.delayedPage === "resume") && <Resume setMouseInScrollableArea={setMouseInScrollableArea} />}
-                {(ctx.delayedPage === "contact") && <Contact />}
-                
-                {/* {(ctx.delayedPage === "contact") && <Contact />} */}
+                {ctx.delayedPage === "resume" && <Resume setMouseInScrollableArea={setMouseInScrollableArea} />}
+                {ctx.delayedPage === "contact" && <Contact />}
             </div>
         </>
-    )
-}
+    );
+};
 
 export default ContentManager;

@@ -6,19 +6,26 @@ import PageContext from "../../Store/page-context";
 const NavMobile = () => {
     const ctx = useContext(PageContext);
 
-    const currentSectionHandler = index => e => {
-        if (ctx.currentPage === ctx.delayedPage) {
-            ctx.changePage(ctx.pages[index])
-        }
-    }
+    // changes page when links are clicked
 
-    return (    
+    const currentSectionHandler = (index) => (e) => {
+        if (ctx.currentPage === ctx.delayedPage) {
+            ctx.changePage(ctx.pages[index]);
+        }
+    };
+
+    return (
         <div className={styles["nav-mobile"]}>
-            <div className={styles['flex-container']}>
+            <div className={styles["flex-container"]}>
                 {ctx.pages.map((link, index) => {
                     return (
-                        <div key={index} className={styles['align-vertical']}>
-                            <ButtonLink onClick={currentSectionHandler(index)}>{link}</ButtonLink>
+                        <div key={index} className={styles["align-vertical"]}>
+                            <ButtonLink
+                                onClick={currentSectionHandler(index)}
+                                highlight={ctx.currentPage === link}
+                            >
+                                {link}
+                            </ButtonLink>
                         </div>
                     );
                 })}

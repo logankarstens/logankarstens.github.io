@@ -1,12 +1,9 @@
 .container {
     background-color: rgb(30, 19, 35);
-    transition: opacity 0.4s ease-out;
     width: 100%;
     z-index: 10;
     overflow-y: scroll;
-    -webkit-box-sizing: border-box; 
-    -moz-box-sizing: border-box;    
-    box-sizing: border-box; 
+    min-height: 0px;
 }
 .main {
     padding: 3rem;
@@ -15,24 +12,22 @@
     line-height: 16px;
 }
 
-.main li {
-    font-size: 1.15rem;
-    line-height: 28px;
+.main li, .main p {
+    font-size: 1.3em;
+    line-height: 1.5em;
     list-style-type: square;
 }
 
 .main h2 { 
-    font-size: 2rem;
+    font-size: 2em;
 }
 
 .main h3 {
-    font-size: 1.5rem;
+    font-size: 1.5em;
     font-weight: normal;
 }
 
-.main p {
-    font-size: 1.15rem;
-}
+
 
 .container {
     scrollbar-width: none;
@@ -43,6 +38,9 @@
    display: none;
  }
 
+.test {
+    border: 1px solid red;
+}
 
 .scroll-container {
     position: absolute;
@@ -69,7 +67,7 @@ img {
 }
 
 
-@media (min-width: 1280px) {
+@media (min-width: 1100px) {
     .container {
         width: 40vw;
     }
@@ -77,5 +75,9 @@ img {
 
     .scrollbar {
         min-height: 20%;
+    }
+
+    .main li, .main p {
+        font-size: 1.15em;
     }
 }

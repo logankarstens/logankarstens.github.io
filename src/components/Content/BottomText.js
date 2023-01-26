@@ -6,17 +6,21 @@ import { delay } from "../../Store/page-context";
 const BottomText = () => {
     const ctx = useContext(PageContext);
     const [offset, setOffset] = useState(-36);
+
+    // slide in bottomtext elements on page change
     useEffect(() => {
         setTimeout(() => {
             setOffset(0);
         }, 5);
     }, []);
+    // slide out bottomtext elements on page change
     useEffect(() => {
         setOffset(-36);
         setTimeout(() => {
             setOffset(0);
         }, delay);
     }, [ctx.currentPage]);
+    
     return (
         <div className={styles.main} style={{flexDirection: ctx.isPortrait ? 'column' : 'row'}}>
             <div
