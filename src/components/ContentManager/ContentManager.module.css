@@ -9,12 +9,8 @@
     font-size: 0.7rem;
 }
 
-.filler {
-    flex-grow: 100;
-    min-height: 100%;
-}
 .vertical {
-    flex-direction: column-reverse !important;
+    flex-direction: column !important;
     flex-grow: 1;
 }
 
@@ -23,7 +19,7 @@
     height: 100vh;
 }
 
-@media (min-width: 1100px) {
+@media (min-width: 1300px) {
     .container {
         flex-direction: row; 
         font-size: 1rem;

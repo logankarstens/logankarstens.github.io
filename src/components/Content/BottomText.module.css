@@ -24,9 +24,7 @@
     font-size: 1.4em;
 }
 
-.main > * {
-    max-width: 100%;
-}
+
 
 .main h1 {
     color: #C2AD95;
@@ -45,24 +43,28 @@
 
 .left {
     text-align: left;
-    display: flex;
+    width: fit-content;
 }
 
 .right {
+
     margin-left: auto;
-    width: calc(20rem + 15%);
+    max-width: 100%;
     text-align: right;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    align-self: flex-end;
 }
 
 
-@media (min-width: 1100px) {
+@media (min-width: 1300px) {
     .main {
         padding: 0rem 3rem 3rem 3rem;
     }
     .main h1 {
         font-size: 6rem;
+    }
+    .right {
+        max-width: 30rem;
     }
 }

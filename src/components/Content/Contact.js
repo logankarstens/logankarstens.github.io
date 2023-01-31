@@ -4,8 +4,8 @@ import styles from './Contact.module.css';
 import ButtonLink from '../UI/ButtonLink/ButtonLink';
 import PageContext from '../../Store/page-context';
 
-import linkedin from '../../assets/linkedin.svg'
-import github from '../../assets/github.svg'
+import linkedin from '../../assets/vectors/linkedin.svg'
+import github from '../../assets/vectors/github.svg'
 
 import emailjs from 'emailjs-com';
 

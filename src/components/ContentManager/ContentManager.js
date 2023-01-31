@@ -1,9 +1,13 @@
 import { useState, useEffect, useContext, useCallback, useRef } from "react";
 import styles from "./ContentManager.module.css";
+
 import BottomText from "../Content/BottomText";
 import Resume from "../Content/Resume";
 import Contact from "../Content/Contact";
+import Projects from "../Content/Projects"
+
 import PageContext from "../../Store/page-context";
+
 const ContentManager = () => {
     const ctx = useContext(PageContext);
     const [mouseInScrollableArea, setMouseInScrollableArea] = useState(false);
@@ -64,9 +68,11 @@ const ContentManager = () => {
                 onScroll={scrollHandler}
                 ref={wrapper}
             >
+                {ctx.delayedPage === "projects" && <Projects />}
+                {ctx.delayedPage === "contact" && <Contact />}
                 <BottomText />
                 {ctx.delayedPage === "resume" && <Resume setMouseInScrollableArea={setMouseInScrollableArea} />}
-                {ctx.delayedPage === "contact" && <Contact />}
+                
             </div>
         </>
     );

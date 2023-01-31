@@ -1,0 +1,116 @@
+h2 {
+    font-size: 2em;
+}
+ p {
+    font-size: 1.3em;
+}
+a {
+    text-decoration: none;
+}
+
+
+.underline {
+    display: inline-block;
+}
+  
+.underline::after {
+    content: '';
+    width: 0px;
+    height: 3px;
+    display: block;
+    background: white;
+    transition: 300ms;
+}   
+
+.underline:hover::after {
+    width: 100%;
+}   
+
+.container {
+    width: 100vw;
+    height: 1000%;
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+    flex-direction: column;
+}
+
+
+
+.main, .bottom {
+    display: flex;
+    justify-content: space-between;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+
+}
+
+.main > * {
+    padding: 1rem 4rem;
+    z-index: 1;
+}
+
+.main {
+    position: relative;
+    flex-direction: column;
+    height: 100%;
+    overflow-y: auto;
+    background-position: center;
+    background-size: cover;
+}
+
+.img-container, .img-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+}
+
+.img-container {
+    background-position: center;
+    background-size: cover;
+    transition: filter 0.4s ease-out;
+}
+
+.img-overlay {
+    padding: 0;
+    background: linear-gradient(transparent 75%, 83%, rgba(0, 0, 0, 0.65) 100%);
+    transition: opacity 0.4s ease-out;
+}
+
+.text {
+    position: relative;
+    transition: opacity 0.4s ease-out;
+    overflow-y: auto;
+}
+
+.bottom > * {
+    bottom: .9em;
+}
+.left-button, .right-button {
+    position: absolute;
+    padding: 0.5rem 0.5rem;
+}
+.left-button {
+    position: absolute;
+    left: 1rem;
+}
+
+.right-button {
+    position: absolute;
+    right: 1rem;
+}
+
+@media (min-width: 1300px) {
+    .container {
+        margin: 3rem;
+        width: 50rem;
+    }
+    .main {
+        max-height: 30rem;
+    }
+    .bottom > * {
+        bottom: 1.2em;
+    }
+}

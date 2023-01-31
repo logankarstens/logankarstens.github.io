@@ -1,6 +1,6 @@
 .main {
     font-size: 1.3em;
-    flex-grow: 1;
+    flex-grow: 100;
     justify-content: space-between;
     padding-top: 2rem;
     max-width: 50rem;

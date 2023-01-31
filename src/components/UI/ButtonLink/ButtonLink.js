@@ -8,6 +8,7 @@ const ButtonLink = (props) => {
                         ${props.highlight && styles.highlight} 
                         ${props.hover && styles.hover} 
                         ${props.fullButton && styles.fullButton}
+                        ${props.className}
                       `}
             onClick={props.onClick}
         >

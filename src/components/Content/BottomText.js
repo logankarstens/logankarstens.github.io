@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import styles from "./BottomText.module.css";
 import PageContext from "../../Store/page-context";
-import PageTexts from "./PageTexts";
+import PageTexts from "../../assets/Data/PageTexts";
 import { delay } from "../../Store/page-context";
 const BottomText = () => {
     const ctx = useContext(PageContext);
@@ -22,7 +22,7 @@ const BottomText = () => {
     }, [ctx.currentPage]);
     
     return (
-        <div className={styles.main} style={{flexDirection: ctx.isPortrait ? 'column' : 'row'}}>
+        <div className={styles.main} style={{flexDirection: ctx.isPortrait && ctx.delayedPage === "home" ? 'column' : 'row'}}>
             <div
                 className={styles.left}
                 style={{
@@ -31,7 +31,13 @@ const BottomText = () => {
                     transition: "margin-left " + delay / 1000 + "s " + (!offset ? "ease-out" : "ease-in"),
                 }}
             >
-                <PageTexts page={ctx.delayedPage} type="title" />
+
+                <div>
+                    <h2><strong>&#60;&#62;</strong></h2>
+                    <h1>{PageTexts.get(ctx.delayedPage).title}</h1>
+                    <h2>&#60;/&#62;</h2>
+                </div>
+                
             </div>
             <div
                 className={styles.right}
@@ -41,7 +47,12 @@ const BottomText = () => {
                     width: (ctx.delayedPage === "resume" || ctx.delayedPage === "contact") && "0",
                 }}
             >
-                <PageTexts page={ctx.delayedPage} type="paragraph" />
+                <div>
+                    {PageTexts.get(ctx.delayedPage).text.map((paragraph, index) => {
+                        return (<p key={index}>{paragraph}</p>)
+                    })}
+                    <br />
+                </div>
             </div>
         </div>
     );

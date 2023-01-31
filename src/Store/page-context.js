@@ -24,7 +24,7 @@ export const PageContextProvider = (props) => {
         setPageData((prevData) => {
             return {
                 ...prevData, 
-                isPortrait: !window.matchMedia("(min-width: 1100px)").matches
+                isPortrait: !window.matchMedia("(min-width: 1300px)").matches
             }
         })
     }, [])

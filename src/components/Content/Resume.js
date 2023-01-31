@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext, useCallback, useRef } from "rea
 
 import styles from "./Resume.module.css";
 import PageContext from "../../Store/page-context";
-import tree from "../../assets/tree.svg";
+import tree from "../../assets/vectors/tree.svg";
 const Resume = (props, ref) => {
     const ctx = useContext(PageContext);
 
@@ -49,7 +49,6 @@ const Resume = (props, ref) => {
 
     useEffect(() => {
         if (ctx.currentPage !== ctx.delayedPage) {
-
             updateMouseScroll(false)
         }
     }, [ctx, updateMouseScroll]);
@@ -136,7 +135,8 @@ const Resume = (props, ref) => {
                 <br></br>
                 <h2>Technologies</h2>
                 <br></br>
-                <img src={tree} alt="A ever-growing list of technologies I have experience with"></img>
+                <div className={styles.img}><img src={tree} alt="An ever-growing list of technologies I have experience with" /></div>
+               
                 <br></br>
                 <br></br>
                 <p>Always open to learning new technologies!</p>
