@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useEffect, useContext, useCallback, useRef } from "react";
 
 import styles from "./Projects.module.css";
 import ProjectData from "../../assets/Data/ProjectData";
@@ -6,14 +6,38 @@ import ButtonLink from "../UI/ButtonLink/ButtonLink";
 
 import PageContext from "../../Store/page-context";
 
-const Projects = () => {
+const Projects = (props) => {
     const ctx = useContext(PageContext);
     const [projectIndex, setProjectIndex] = useState(0);
     const [hover, setHover] = useState(false);
 
+    const projects = useRef();
+
+    const updateMouseScroll = props.setMouseInScrollableArea;
+
     const hoverHandler = () => {
+        updateMouseScroll((prev) => !prev);
         setHover((prev) => !prev);
     };
+
+    // mouseInScrollableArea compatability for swipes on mobile devices
+    
+    const swipeStartHandler = useCallback((e) => {
+        updateMouseScroll(projects && projects.current.contains(e.target))
+    }, [updateMouseScroll])
+    
+    // creates event listener for mobile-compatible mouseScroll handler,
+    // ensures mouseSetInScrollableArea is set to false before unrendering
+    useEffect(() => {
+
+        window.addEventListener("touchstart", swipeStartHandler);
+        
+        return () => {
+            window.removeEventListener("touchstart", swipeStartHandler);
+            updateMouseScroll(false);
+        }
+    }, [swipeStartHandler, updateMouseScroll]);
+   
 
     const currentProject = ProjectData[projectIndex];
 
@@ -22,20 +46,20 @@ const Projects = () => {
             if (projectIndex > 0) {
                 setProjectIndex((prevIndex) => prevIndex-1);
             } else {
-                setProjectIndex(ProjectData.length - 1)
+                setProjectIndex(ProjectData.length - 1);
             }
         } else {
             if (projectIndex < ProjectData.length - 1) {
                 setProjectIndex((prevIndex) => prevIndex+1);
             } else {
-                setProjectIndex(0)
+                setProjectIndex(0);
             }
         }
     }
 
     return (
         <div className={styles.container} style={{ opacity: ctx.opacity, transition: "opacity 0.4s ease-out" }}>
-            <div className={styles.main} onMouseEnter={hoverHandler} onMouseLeave={hoverHandler}>
+            <div className={styles.main} ref={projects} onMouseEnter={hoverHandler} onMouseLeave={hoverHandler}>
                 <div
                     className={styles["img-container"]}
                     style={{

@@ -44,16 +44,29 @@
 .left {
     text-align: left;
     width: fit-content;
+    transition: margin-left 0.5s ease-out, padding-right 0.5s ease-out;
+}
+
+.left-expand {
+    margin-left: -36rem;
+    padding-right: 36rem;
+    transition: all 0.5s ease-in;
 }
 
 .right {
-
     margin-left: auto;
     max-width: 100%;
     text-align: right;
     display: flex;
     flex-direction: column;
     align-self: flex-end;
+    transition: margin-right 0.5s ease-out, padding-left 0.5s ease-out;
+}
+
+.right-expand {
+    margin-right: -45rem;
+    padding-left: 45rem;
+    transition: all 0.5s ease-in;
 }
 
 

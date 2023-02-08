@@ -68,7 +68,7 @@ const ContentManager = () => {
                 onScroll={scrollHandler}
                 ref={wrapper}
             >
-                {ctx.delayedPage === "projects" && <Projects />}
+                {ctx.delayedPage === "projects" && <Projects setMouseInScrollableArea={setMouseInScrollableArea}/>}
                 {ctx.delayedPage === "contact" && <Contact />}
                 <BottomText />
                 {ctx.delayedPage === "resume" && <Resume setMouseInScrollableArea={setMouseInScrollableArea} />}

@@ -31,7 +31,7 @@ a {
     height: 1000%;
     display: flex;
     flex-grow: 1;
-    justify-content: center;
+    justify-content: flex-start;
     flex-direction: column;
 }
 
@@ -55,6 +55,7 @@ a {
     position: relative;
     flex-direction: column;
     height: 100%;
+    max-height: 40vh;
     overflow-y: auto;
     background-position: center;
     background-size: cover;
@@ -106,6 +107,7 @@ a {
     .container {
         margin: 3rem;
         width: 50rem;
+        justify-content: center;
     }
     .main {
         max-height: 30rem;

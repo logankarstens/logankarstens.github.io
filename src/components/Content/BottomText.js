@@ -5,33 +5,28 @@ import PageTexts from "../../assets/Data/PageTexts";
 import { delay } from "../../Store/page-context";
 const BottomText = () => {
     const ctx = useContext(PageContext);
-    const [offset, setOffset] = useState(-36);
+    const [expand, setExpand] = useState(false);
 
-    // slide in bottomtext elements on page change
+    // slide in bottomtext elements on page load
     useEffect(() => {
         setTimeout(() => {
-            setOffset(0);
+            setExpand(true);
         }, 5);
     }, []);
-    // slide out bottomtext elements on page change
+    // slide out/in bottomtext elements on page change
     useEffect(() => {
-        setOffset(-36);
+        setExpand(false);
         setTimeout(() => {
-            setOffset(0);
+            setExpand(true);
         }, delay);
     }, [ctx.currentPage]);
-    
+
     return (
         <div className={styles.main} style={{flexDirection: ctx.isPortrait && ctx.delayedPage === "home" ? 'column' : 'row'}}>
             <div
-                className={styles.left}
-                style={{
-                    marginLeft: offset + "rem",
-                    alignSelf: ctx.isPortrait ? '' : 'flex-end',
-                    transition: "margin-left " + delay / 1000 + "s " + (!offset ? "ease-out" : "ease-in"),
-                }}
+                className={`${styles.left} ${!expand ? styles['left-expand'] : ''}`}
+                style={{alignSelf: ctx.isPortrait ? '' : 'flex-end'}}
             >
-
                 <div>
                     <h2><strong>&#60;&#62;</strong></h2>
                     <h1>{PageTexts.get(ctx.delayedPage).title}</h1>
@@ -40,12 +35,8 @@ const BottomText = () => {
                 
             </div>
             <div
-                className={styles.right}
-                style={{
-                    marginRight: 1.2 * offset + "rem",
-                    transition: "margin-right " + delay / 1000 + "s " + (!offset ? "ease-out" : "ease-in"),
-                    width: (ctx.delayedPage === "resume" || ctx.delayedPage === "contact") && "0",
-                }}
+                className={`${styles.right} ${!expand ? styles['right-expand'] : ''}`}
+                style={{width: (ctx.delayedPage === "resume" || ctx.delayedPage === "contact") && "0"}}
             >
                 <div>
                     {PageTexts.get(ctx.delayedPage).text.map((paragraph, index) => {
